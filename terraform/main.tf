@@ -187,3 +187,149 @@ resource "null_resource" "import_dashboards" {
     null_resource.install_monitoring
   ]
 }
+
+# Install nginx ingress controller
+resource "null_resource" "install_ingress" {
+  provisioner "local-exec" {
+    interpreter = ["bash", "-exc"]
+    command     = <<-EOT
+      helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+      helm repo update
+      helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
+        --namespace ingress-nginx \
+        --create-namespace \
+        --set controller.service.loadBalancerIP=34.59.182.115 \
+        --wait \
+        --timeout 5m
+    EOT
+  }
+
+  depends_on = [
+    null_resource.wait_conditions
+  ]
+}
+
+# Install cert-manager
+resource "null_resource" "install_cert_manager" {
+  provisioner "local-exec" {
+    interpreter = ["bash", "-exc"]
+    command     = <<-EOT
+      helm repo add jetstack https://charts.jetstack.io
+      helm repo update
+      helm upgrade --install cert-manager jetstack/cert-manager \
+        --namespace cert-manager \
+        --create-namespace \
+        --set crds.enabled=true \
+        --wait \
+        --timeout 5m
+    EOT
+  }
+
+  depends_on = [
+    null_resource.install_ingress
+  ]
+}
+
+# Create ClusterIssuer and Ingress resources
+resource "null_resource" "setup_ingress_resources" {
+  provisioner "local-exec" {
+    interpreter = ["bash", "-exc"]
+    command     = <<-EOT
+      cat <<YAML | kubectl apply -f -
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: maksym.kolesnyk.kbz.2024@lpnu.ua
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: boutique-ingress
+  namespace: staging
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - staging.koma-net.com
+    secretName: staging-tls
+  rules:
+  - host: staging.koma-net.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: boutique-ingress
+  namespace: prod
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - prod.koma-net.com
+    secretName: prod-tls
+  rules:
+  - host: prod.koma-net.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: monitoring
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - monitoring.koma-net.com
+    secretName: monitoring-tls
+  rules:
+  - host: monitoring.koma-net.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: prometheus-grafana
+            port:
+              number: 80
+YAML
+    EOT
+  }
+
+  depends_on = [
+    null_resource.install_cert_manager
+  ]
+}

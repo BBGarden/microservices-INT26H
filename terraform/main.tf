@@ -147,3 +147,43 @@ resource "null_resource" "wait_conditions" {
     null_resource.deploy_prod,
   ] 
 }
+
+# Install Prometheus + Grafana via Helm
+resource "null_resource" "install_monitoring" {
+  provisioner "local-exec" {
+    interpreter = ["bash", "-exc"]
+    command     = <<-EOT
+      helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+      helm repo update
+      helm upgrade --install prometheus prometheus-community/kube-prometheus-stack \
+        -f ${path.module}/../monitoring/grafana-values.yaml \
+        --namespace monitoring \
+        --create-namespace \
+        --wait \
+        --timeout 10m
+      kubectl patch svc prometheus-grafana -n monitoring -p '{"spec": {"type": "LoadBalancer"}}'
+    EOT
+  }
+
+  depends_on = [
+    null_resource.wait_conditions
+  ]
+}
+
+# Import Grafana dashboards
+resource "null_resource" "import_dashboards" {
+  provisioner "local-exec" {
+    interpreter = ["bash", "-exc"]
+    command     = <<-EOT
+      kubectl create configmap grafana-dashboards \
+        --from-file=${path.module}/../monitoring/dashboards/ \
+        -n monitoring \
+        --dry-run=client -o yaml | kubectl apply -f -
+        kubectl label configmap grafana-dashboards grafana_dashboard=1 -n monitoring --overwrite
+    EOT
+  }
+
+  depends_on = [
+    null_resource.install_monitoring
+  ]
+}

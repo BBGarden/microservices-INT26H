@@ -178,7 +178,7 @@ resource "null_resource" "import_dashboards" {
       kubectl create configmap grafana-dashboards \
         --from-file=${path.module}/../monitoring/dashboards/ \
         -n monitoring \
-        --dry-run=client -o yaml | kubectl apply -f -
+        --dry-run=client -o yaml | kubectl apply --server-side -f -
         kubectl label configmap grafana-dashboards grafana_dashboard=1 -n monitoring --overwrite
     EOT
   }

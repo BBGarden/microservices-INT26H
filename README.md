@@ -7,8 +7,23 @@ Google uses this application to demonstrate how developers can modernize enterpr
 
 ## Architecture
 
-**Online Boutique** is composed of 11 microservices written in different
-languages that talk to each other over gRPC. Application is deployed on Google Cloud as GKE on two environments. They are monitored by default metrics with the help of dashboards on Cloud Monitoring and Grafana. Github Actions has been configured for CI/CD for payment and email microservices. High-level Cloud Architecture can be seen below.
+**Online Boutique** is composed of 11 microservices written in different languages that talk to each other over gRPC.
+
+### Cloud Architecture
+
+The application is deployed on **Google Cloud Platform** using the following stack:
+
+- **Infrastructure (IaC):** All cloud resources are provisioned with Terraform — GKE cluster, namespaces, ingress, TLS certificates, and the monitoring stack. A single `terraform apply` brings up the full environment; `terraform destroy` tears it down cleanly.
+
+- **Kubernetes (GKE):** A single GKE cluster (zonal, `us-central1-b`) hosts two isolated environments in separate namespaces:
+  - `staging` — includes a load generator for traffic simulation
+  - `prod` — network policies enabled, no load generator
+
+- **Ingress & TLS:** Nginx Ingress Controller routes external traffic. TLS certificates are managed automatically via cert-manager with Let's Encrypt (`staging.koma-net.com`, `prod.koma-net.com`).
+
+- **CI/CD (GitHub Actions):** Automated pipelines for `paymentservice` and `emailservice` — on every push to `main` the workflow builds a Docker image, pushes it to Google Artifact Registry, deploys to `staging`, waits for rollout, then deploys to `prod`.
+
+- **Monitoring:** Prometheus + Grafana deployed via Helm (`kube-prometheus-stack`). Four custom dashboards cover reliability and scalability metrics: pod health, CPU/memory usage vs limits, throttling, restart history, and network throughput.
 
 [![High-level Cloud Architecture](/docs/img/architecture-diagram.png)](/docs/img/architecture-diagram.png)
 

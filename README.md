@@ -34,20 +34,20 @@ Find **Microservices** at the [`./src` directory](/src).
 ### Cloud Deployment
 |1|2|
 | :---------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
-| [![Screenshot of deployment 1](/docs/img/deployment-1.png)](/docs/img/deployment-1.png) | [![Screenshot of deployment 2](/docs/img/deployment-2.png)](/docs/img/deployment-2.png) |
+| [![Screenshot of deployment 1](/docs/img/deployment-1.jpg)](/docs/img/deployment-1.jpg) | [![Screenshot of deployment 2](/docs/img/deployment-2.jpg)](/docs/img/deployment-2.jpg) |
 
 ### Activated CI/CD
-|1|2|
-| :-----------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
-| [![Screenshot of CI/CD 1](/docs/img/cicd-1.png)](/docs/img/cicd-1.png) | [![Screenshot of CI/CD 2](/docs/img/cicd-2.png)](/docs/img/cicd-2.png) |
+|1|2|3|
+| :-----------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :----: |
+| [![Screenshot of CI/CD 1](/docs/img/cicd-1.jpg)](/docs/img/cicd-1.jpg) | [![Screenshot of CI/CD 2](/docs/img/cicd-2.png)](/docs/img/cicd-2.png) | [![Screenshot of CI/CD 3](/docs/img/cicd-3.png)](/docs/img/cicd-3.png) |
 
 ### Monitoring and Dashboards
 |1|2|3|
 | :-----------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
-| [![Screenshot of dashboard 1](/docs/img/dashboard-1.png)](/docs/img/dashboard-1.png) | [![Screenshot of dashboard 2](/docs/img/dashboard-2.png)](/docs/img/dashboard-2.png) | [![Screenshot of dashboard 3](/docs/img/dashboard-3.png)](/docs/img/dashboard-3.png) | 
+| [![Screenshot of dashboard 1](/docs/img/dashboard-1.jpg)](/docs/img/dashboard-1.jpg) | [![Screenshot of dashboard 2](/docs/img/dashboard-2.jpg)](/docs/img/dashboard-2.jpg) | [![Screenshot of dashboard 3](/docs/img/dashboard-3.jpg)](/docs/img/dashboard-3.jpg) | 
 
 ## Showcase
-[![Showcase video](/docs/img/showcase-thumbnail.png)](/docs/mov/showcase.mp4)
+[![Showcase video](/docs/img/showcase-thumbnail.jpg)](/docs/mov/showcase.mp4)
 
 ## Use Terraform to deploy Online Boutique on a GKE cluster
 

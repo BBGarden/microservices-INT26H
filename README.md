@@ -16,18 +16,20 @@ Find **Protocol Buffers Descriptions** at the [`./protos` directory](/protos).
 Find **Microservices** at the [`./src` directory](/src).
 
 ## Screenshots
+### Cloud Deployment
+|1|2|
+| :---------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
+| [![Screenshot of deployment 1](/docs/img/deployment-1.png)](/docs/img/deployment-1.png) | [![Screenshot of deployment 2](/docs/img/deployment-2.png)](/docs/img/deployment-2.png) |
 
-| Cloud Deployment                            |
-| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| [![Screenshot of deployment 1](/docs/img/deployment-1.png)](/docs/img/deployment-1.png) [![Screenshot of deployment 2](/docs/img/deployment-2.png)](/docs/img/deployment-2.png) |
+### Activated CI/CD
+|1|2|
+| :-----------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
+| [![Screenshot of CI/CD 1](/docs/img/cicd-1.png)](/docs/img/cicd-1.png) | [![Screenshot of CI/CD 2](/docs/img/cicd-2.png)](/docs/img/cicd-2.png) |
 
-| Active CI/CD                            |
-| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| [![Screenshot of CI/CD 1](/docs/img/cicd-1.png)](/docs/img/cicd-1.png) [![Screenshot of CI/CD 2](/docs/img/cicd-2.png)](/docs/img/cicd-2.png) |
-
-| Dashboards                            |
-| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| [![Screenshot of dashboard 1](/docs/img/dashboard-1.png)](/docs/img/dashboard-1.png) [![Screenshot of dashboard 2](/docs/img/dashboard-2.png)](/docs/img/dashboard-2.png)  [![Screenshot of dashboard 3](/docs/img/dashboard-3.png)](/docs/img/dashboard-3.png) |
+### Monitoring and Dashboards
+|1|2|3|
+| :-----------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
+| [![Screenshot of dashboard 1](/docs/img/dashboard-1.png)](/docs/img/dashboard-1.png) | [![Screenshot of dashboard 2](/docs/img/dashboard-2.png)](/docs/img/dashboard-2.png) | [![Screenshot of dashboard 3](/docs/img/dashboard-3.png)](/docs/img/dashboard-3.png) | 
 
 ## Showcase
 [![Showcase video](/docs/img/showcase-thumbnail.png)](/docs/mov/showcase.mp4)
